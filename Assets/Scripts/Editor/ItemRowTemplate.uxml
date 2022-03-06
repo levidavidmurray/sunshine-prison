@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="ItemRow" style="justify-content: center; height: 35px;">
+        <ui:VisualElement name="Row" style="flex-direction: row; align-items: center;">
+            <ui:VisualElement name="Icon" style="width: 25px; height: 25px; background-color: rgba(0, 0, 0, 255);" />
+            <ui:Label text="Unknown" display-tooltip-when-elided="true" name="Name" enable-rich-text="true" style="flex-grow: 1; padding-left: 5px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
