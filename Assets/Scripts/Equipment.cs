@@ -6,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment")]
 public class Equipment : Item {
 
+    public static string s_DragDataType = "DraggableEquipment";
+
     public enum EquipmentSlot {
         Hat,
         Hair,

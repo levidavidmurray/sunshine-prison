@@ -1,0 +1,49 @@
+﻿title: Start
+---
+<<set $hasClueA to false>>
+<<set $hasClueB to false>>
+Warden: Welcome to prison! Unfortunately, you're just in time for an unsolved mystery...
+Warden: You'll have to speak to these two to figure out what happened!
+// no jumps, this conversation just ends and dumps the player back in the scene
+===
+title: LeftPrisonerLouis
+---
+Louis: What do you want to know?
+-> Something that will get me no clues?
+-> Something that will get me Clue A? <<if not $hasClueA>>
+    <<set $hasClueA to true>>
+-> Something relating to existing Clue A? <<if $hasClueA>>
+-> Something relating to existing Clue B? <<if $hasClueB>>
+Louis: ~additional dialogue~
+Louis: Ok, bye!
+===
+title: RightPrisonerJavier
+---
+Javier: What do you want to know?
+-> Something that will get me no clues?
+-> Something that will get me Clue B? <<if not $hasClueB>>
+    <<set $hasClueB to true>>
+-> Something relating to existing Clue A? <<if $hasClueA>>
+-> Something relating to existing Clue B? <<if $hasClueB>>
+Javier: ~additional dialogue~
+Javier: Ok, bye!
+===
+title: Warden
+---
+Warden: Are you ready to tell me what happened?
+-> Yes
+    Warden: Well, what do you know?
+    -> I have no clues.
+    -> I have clue A. <<if $hasClueA>>
+    -> I have clues A and B. <<if $hasClueB>>
+        <<jump Ending>>
+    Warden: That doesn't sound right...
+===
+title: Ending
+---
+Warden: You solved it!
+Warden: Welcome to Sunshine Prison!
+<<disable Warden>>
+<<disable LeftPrisonerLouis>>
+<<disable RightPrisonerJavier>>
+===

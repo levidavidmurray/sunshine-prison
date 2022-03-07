@@ -23,10 +23,14 @@ public class ModelToItemPrefab_Importer : AssetPostprocessor {
         
         foreach (SkinnedMeshRenderer mf in mfs) {
             Debug.Log($"Saving mesh: {mf.name}");
-            AssetDatabase.CreateAsset(mf.sharedMesh, $"Assets/Items/Meshes/{mf.name}_Mesh.asset");
+            var meshPath = $"Assets/Items/Meshes/{mf.name}_Mesh.asset";
+            AssetDatabase.DeleteAsset(meshPath);
+            AssetDatabase.CreateAsset(mf.sharedMesh, meshPath);
 
             foreach (Material mat in mf.sharedMaterials) {
-                AssetDatabase.CreateAsset(mat, $"Assets/Items/Meshes/{mf.name}_{mat.name}.mat");
+                var matPath = $"Assets/Items/Meshes/{mf.name}_{mat.name}.mat";
+                AssetDatabase.DeleteAsset(matPath);
+                AssetDatabase.CreateAsset(mat, matPath);
             }
             
             var prefabPath = $"Assets/Items/Meshes/{mf.name}.prefab";
@@ -44,15 +48,26 @@ public class ModelToItemPrefab_Importer : AssetPostprocessor {
     private void OnPostprocessPrefab(GameObject g) {
         if (g.name != QueuedItemPrefabName) return;
         
-        // Create Equipment scriptable object
-        var newItem = ScriptableObject.CreateInstance<Equipment>();
-        newItem.mesh = g.GetComponent<SkinnedMeshRenderer>();
-        newItem.name = g.name;
-        newItem.equipSlot = GetEquipSlot(newItem.name);
+        var itemPath = $"Assets/Items/{g.name}.asset";
+        Equipment equipSO = AssetDatabase.LoadAssetAtPath<Equipment>(itemPath);
         
-        var itemPath = $"Assets/Items/{newItem.name}.asset";
-        AssetDatabase.CreateAsset(newItem, itemPath);
-
+        // Create Equipment scriptable object
+        if (!equipSO) {
+            equipSO = ScriptableObject.CreateInstance<Equipment>();
+            equipSO.mesh = g.GetComponent<SkinnedMeshRenderer>();
+            equipSO.name = g.name;
+            equipSO.equipSlot = GetEquipSlot(equipSO.name);
+            AssetDatabase.CreateAsset(equipSO, itemPath);
+        }
+        else {
+            equipSO.mesh = g.GetComponent<SkinnedMeshRenderer>();
+            equipSO.name = g.name;
+            equipSO.equipSlot = GetEquipSlot(equipSO.name);
+            EditorUtility.SetDirty(equipSO);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+        
         QueuedItemPrefabName = null;
         QueuedItemSOPath = itemPath;
     }

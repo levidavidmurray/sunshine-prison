@@ -1,3 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:Foldout text="Foldout" name="Default_Inspector" />
+    <ui:Button text="Refresh" display-tooltip-when-elided="true" name="Button_Refresh" style="margin-top: 4px; margin-bottom: 4px;" />
+    <ui:VisualElement name="EquipmentRow" />
+    <ui:Foldout text="Default Inspector" name="Default_Inspector" value="false" />
 </ui:UXML>

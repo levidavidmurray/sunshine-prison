@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883f83f54378be74eaa5e1082b788bc9, type: 3}
   m_Name: Hair_Buzzed
   m_EditorClassIdentifier: 
-  name: Buzzed
+  name: Hair_Buzzed
   equipSlot: 1
   mesh: {fileID: 498100877992655582, guid: fd826f6b35a83274283fd151ab76229c, type: 3}
